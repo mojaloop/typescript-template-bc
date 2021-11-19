@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "mojaloop logging service",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/mojaloop/logging-bc",
+  "homepage": "https://github.com/mojaloop/logging-bc/tree/main/modules/logging-svc",
   "bugs": {
     "url": "https://github.com/mojaloop/logging-bc/issues#readme"
   },
