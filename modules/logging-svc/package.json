@@ -42,10 +42,8 @@
   "dependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/node-cache": "^4.2.5",
-    "base64url": "^3.0.1",
     "commander": "^8.3.0",
-    "dotenv": "^10.0.0",
-    "path": "^0.12.7"
+    "dotenv": "^10.0.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",
