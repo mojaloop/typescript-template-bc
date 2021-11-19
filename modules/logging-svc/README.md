@@ -25,7 +25,7 @@ nvm use
 npm -g yarn
 ```
 
-### Dependencies
+### Install Dependencies
 
 ```bash
 yarn
