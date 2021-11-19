@@ -12,15 +12,15 @@
 
 [README](./modules/logging-svc/README.md)
 
-#### Running Service
+#### Run
 
 ```bash
 yarn start:logging-svc
 ```
 
-## Install
+## Usage
 
-### Node
+### Install Node version
 
 More information on how to install NVM: https://github.com/nvm-sh/nvm
 
@@ -29,13 +29,13 @@ nvm install
 nvm use
 ```
 
-### Yarn
+### Install Yarn
 
 ```bash
 npm -g yarn
 ```
 
-### Dependencies
+### Install Dependencies
 
 ```bash
 yarn
@@ -58,3 +58,4 @@ yarn start
 ```bash
 yarn test:unit
 ```
+

@@ -10,4 +10,45 @@ Mojaloop Logging Service
 
 ## Usage
 
-TBD
+### Install Node version
+
+More information on how to install NVM: https://github.com/nvm-sh/nvm
+
+```bash
+nvm install
+nvm use
+```
+
+### Install Yarn
+
+```bash
+npm -g yarn
+```
+
+### Dependencies
+
+```bash
+yarn
+```
+
+## Build
+
+```bash
+yarn build
+```
+
+## Run
+
+```bash
+yarn start
+```
+
+## Unit Tests
+
+```bash
+yarn test:unit
+```
+
+## Known Issues
+
+- added `typescript` to [.ncurc.json](./.ncurc.json) as the `dep:update` script will install a non-supported version of typescript
