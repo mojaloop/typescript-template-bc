@@ -25,8 +25,6 @@
     "clean": "yarn run clean:dist && yarn run clean:npm",
     "clean:npm": "lerna clean",
     "clean:dist": "lerna run clean",
-    "postinstall": "yarn run bootstrap",
-    "bootstrap": "lerna bootstrap",
     "pretest": "echo 'FIX ME'",
     "standard": "yarn run --no-progress --stream lint'",
     "lint": "lerna run --no-progress --stream lint",
@@ -49,5 +47,5 @@
   },
   "workspaces": [
     "modules/*"
- ]  
+  ]
 }
