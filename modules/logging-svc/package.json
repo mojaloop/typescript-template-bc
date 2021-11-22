@@ -40,13 +40,14 @@
     "dep:update": "yarn run ncu -u"
   },
   "dependencies": {
-    "@types/dotenv": "^8.2.0",
-    "@types/node-cache": "^4.2.5",
     "commander": "^8.3.0",
     "dotenv": "^10.0.0"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.9",
+    "@types/node-cache": "^4.2.5",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",
