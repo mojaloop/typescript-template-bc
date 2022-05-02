@@ -22,35 +22,44 @@
  * Gates Foundation
  - Name Surname <name.surname@gatesfoundation.com>
 
- * Coil
- - Donovan Changfoot <donovan.changfoot@coil.com>
-
  * Crosslake
  - Pedro Sousa Barreto <pedrob@crosslaketech.com>
 
- * ModusBox
- - Miguel de Barros <miguel.debarros@modusbox.com>
- - Roman Pietrzak <roman.pietrzak@modusbox.com>
-
  --------------
-******/
+ ******/
 
-'use strict'
+"use strict"
 
-export type ILogger = {
-  // trace(...anything);
+import {
+    AppConfiguration,
+    DefaultConfigProvider
+} from "@mojaloop/platform-configuration-bc-client-lib";
+import { ConfigParameterTypes } from "@mojaloop/platform-configuration-bc-types-lib";
 
-  // methods to check debug level
-  isDebugEnabled: () => boolean
-  isInfoEnabled: () => boolean
-  isWarnEnabled: () => boolean
-  isErrorEnabled: () => boolean
-  isFatalEnabled: () => boolean
+// configs - constants / code dependent
+const BC_NAME = "typescript-bc-template";
+const APP_NAME = "example-svc";
+const CONFIGSET_VERSION = "0.0.1";
 
-  // methods to handle logging per level
-  debug: (message?: any, ...optionalParams: any[]) => void
-  info: (message?: any, ...optionalParams: any[]) => void
-  warn: (message?: any, ...optionalParams: any[]) => void
-  error: (message?: any, ...optionalParams: any[]) => void
-  fatal: (message?: any, ...optionalParams: any[]) => void
+// configs - non-constants
+const ENV_NAME = process.env["ENV_NAME"] || "dev";
+const CONFIG_SVC_BASEURL = process.env["CONFIG_SVC_BASEURL"] || "http://localhost:3000";
+
+export function getConfigObj():AppConfiguration{
+    let defaultConfigProvider: DefaultConfigProvider = new DefaultConfigProvider(CONFIG_SVC_BASEURL);
+
+    const appConfig = new AppConfiguration(ENV_NAME, BC_NAME, APP_NAME, CONFIGSET_VERSION, defaultConfigProvider);
+
+    appConfig.addNewParam(
+            "service-http-port",
+            ConfigParameterTypes.INT_NUMBER,
+            3000,
+            "Http port where the webservice will listen in - v"+CONFIGSET_VERSION
+    );
+
+    return appConfig;
+}
+
+export function doBootstrap(appConfigObj:AppConfiguration):void{
+    throw new Error("Not implemented");
 }

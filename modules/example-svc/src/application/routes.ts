@@ -22,35 +22,39 @@
  * Gates Foundation
  - Name Surname <name.surname@gatesfoundation.com>
 
- * Coil
- - Donovan Changfoot <donovan.changfoot@coil.com>
-
  * Crosslake
  - Pedro Sousa Barreto <pedrob@crosslaketech.com>
 
- * ModusBox
- - Miguel de Barros <miguel.debarros@modusbox.com>
- - Roman Pietrzak <roman.pietrzak@modusbox.com>
-
  --------------
-******/
+ ******/
 
-'use strict'
+"use strict"
 
-export type ILogger = {
-  // trace(...anything);
+import express from "express";
+import {ILogger} from "@mojaloop/logging-bc-logging-client-lib";
 
-  // methods to check debug level
-  isDebugEnabled: () => boolean
-  isInfoEnabled: () => boolean
-  isWarnEnabled: () => boolean
-  isErrorEnabled: () => boolean
-  isFatalEnabled: () => boolean
 
-  // methods to handle logging per level
-  debug: (message?: any, ...optionalParams: any[]) => void
-  info: (message?: any, ...optionalParams: any[]) => void
-  warn: (message?: any, ...optionalParams: any[]) => void
-  error: (message?: any, ...optionalParams: any[]) => void
-  fatal: (message?: any, ...optionalParams: any[]) => void
+export class ExpressRoutes {
+    private _logger:ILogger;
+
+    private _mainRouter = express.Router();
+
+
+    constructor(logger:ILogger) {
+        this._logger = logger;
+
+        // main
+        this._mainRouter.get("/", this.getExample.bind(this));
+    }
+
+    get MainRouter():express.Router{
+        return this._mainRouter;
+    }
+
+
+    private async getExample(req: express.Request, res: express.Response, next: express.NextFunction){
+        return res.send({resp:"example worked"});
+    }
+
+
 }
