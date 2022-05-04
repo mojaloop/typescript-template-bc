@@ -41,9 +41,10 @@ const BC_NAME = "typescript-bc-template";
 const APP_NAME = "example-svc";
 const CONFIGSET_VERSION = "0.0.1";
 
+
 // configs - non-constants
 const ENV_NAME = process.env["ENV_NAME"] || "dev";
-const CONFIG_SVC_BASEURL = process.env["CONFIG_SVC_BASEURL"] || "http://localhost:3000";
+const CONFIG_SVC_BASEURL = process.env["CONFIG_SVC_BASEURL"] || "http://localhost:3100";
 
 export function getConfigObj():AppConfiguration{
     let defaultConfigProvider: DefaultConfigProvider = new DefaultConfigProvider(CONFIG_SVC_BASEURL);

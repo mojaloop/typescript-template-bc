@@ -82,7 +82,18 @@ npm -g yarn
 
 Set yarn to v3
 ```bash
-yarn set version 3.2
+yarn set version berry
+```
+
+Confirm with
+```bash
+yarn --version
+```
+
+### Install Yarn Plugins
+
+```bash
+yarn plugin import workspace-tools
 ```
 
 ### Install Dependencies
@@ -110,4 +121,32 @@ yarn start
 ```bash
 yarn test:unit
 ```
+
+## Troubleshooting
+
+### Common yarn errors
+
+#### Error: Cannot find module ... yarn-3.?.0.cjs
+
+If when using yarn you get an error like this:
+```
+node:internal/modules/cjs/loader:936
+throw err;
+^
+
+Error: Cannot find module '/home/pedro/Code/mojaloop/vNext/platform-configuration-bc/.yarn/releases/yarn-3.2.0.cjs'
+at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)
+at Function.Module._load (node:internal/modules/cjs/loader:778:27)
+at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+at node:internal/main/run_main_module:17:47 {
+code: 'MODULE_NOT_FOUND',
+requireStack: []
+}
+```
+
+Remove the line similar to `yarnPath: .yarn/releases/yarn-3.2.0.cjs` in the `.yarnrc.yml` file at the root of the repository, and then try running yarn again with:
+
+```yarn set version berry```
+
+
 
