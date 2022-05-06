@@ -28,7 +28,7 @@
  --------------
  ******/
 
-"use strict"
+"use strict";
 
 import {
     AppConfiguration,
@@ -41,26 +41,23 @@ const BC_NAME = "typescript-bc-template";
 const APP_NAME = "example-svc";
 const CONFIGSET_VERSION = "0.0.1";
 
-
 // configs - non-constants
 const ENV_NAME = process.env["ENV_NAME"] || "dev";
 const CONFIG_SVC_BASEURL = process.env["CONFIG_SVC_BASEURL"] || "http://localhost:3100";
 
-export function getConfigObj():AppConfiguration{
-    let defaultConfigProvider: DefaultConfigProvider = new DefaultConfigProvider(CONFIG_SVC_BASEURL);
+const defaultConfigProvider: DefaultConfigProvider = new DefaultConfigProvider(CONFIG_SVC_BASEURL);
 
-    const appConfig = new AppConfiguration(ENV_NAME, BC_NAME, APP_NAME, CONFIGSET_VERSION, defaultConfigProvider);
+const appConfig = new AppConfiguration(ENV_NAME, BC_NAME, APP_NAME, CONFIGSET_VERSION, defaultConfigProvider);
 
-    appConfig.addNewParam(
-            "service-http-port",
-            ConfigParameterTypes.INT_NUMBER,
-            3000,
-            "Http port where the webservice will listen in - v"+CONFIGSET_VERSION
-    );
+/*
+* Add application parameters here
+* */
+appConfig.addNewParam(
+        "service-http-port",
+        ConfigParameterTypes.INT_NUMBER,
+        3000,
+        "Http port where the webservice will listen in - v"+CONFIGSET_VERSION
+);
 
-    return appConfig;
-}
+export = appConfig;
 
-export function doBootstrap(appConfigObj:AppConfiguration):void{
-    throw new Error("Not implemented");
-}

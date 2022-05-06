@@ -28,6 +28,7 @@ yarn workspace module-name add npm_dependency_name --dev
 **Notes:** 
 - Replace `module-name` with the correct module name, it corresponds to the name property in the module `package.json`, usually starting with `@mojaloop/`
 - Replace `npm_dependency_name` with the correct dependency name
+- Common devDependencies, such as linters or test frameworks, should be installed/dependend in the main `package.json` to avoid repeating them in each of the monorepo's modules
 
 TBD finish this
 
@@ -65,17 +66,35 @@ Please see the details of the example service within its [README](./modules/exam
 
 ## Usage
 
-### Install Node version
+### Install NVM - Node version manager
 
 More information on how to install NVM: https://github.com/nvm-sh/nvm
 
+#### Use NVM to install the correct Node.js version
+
+
 ```bash
+(In the repository root directory)
+
 nvm install
 nvm use
 ```
 
-### Install Yarn
+### Install Yarn - new method - Nodejs' corepack binary
 
+Corepack will automatically install the correct yarn version (according to package.json _packageManager_ entry).  
+Yarn's plugins are now part of the repository, so this is the only command needed.
+
+```bash
+(In the repository root directory)
+
+corepack enable
+```
+
+Docs: https://nodejs.org/dist/latest/docs/api/corepack.html
+
+### Install Yarn - old method
+Note: no need to run these if corepack enable 
 ```bash
 npm -g yarn
 ```

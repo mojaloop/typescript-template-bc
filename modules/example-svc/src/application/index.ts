@@ -28,22 +28,19 @@
  --------------
  ******/
 
-"use strict"
+"use strict";
 
 import express from "express";
 import {ExpressRoutes} from "./routes";
-
-import * as Configs from "./config";
+import appConfigs from "./config";
 
 import {ConsoleLogger, ILogger} from "@mojaloop/logging-bc-logging-client-lib";
-import {AppConfiguration} from "@mojaloop/platform-configuration-bc-client-lib";
+//import {AppConfiguration} from "@mojaloop/platform-configuration-bc-client-lib";
 
 const logger: ILogger = new ConsoleLogger();
 const app = express();
 
 let routes: ExpressRoutes;
-
-let appConfig:AppConfiguration;
 
 function setupExpress() {
 
@@ -63,13 +60,12 @@ function setupRoutes() {
 }
 
 async function start():Promise<void>{
-    appConfig = Configs.getConfigObj();
-    await appConfig.init();
-    await appConfig.bootstrap(true);
+    await appConfigs.init();
+    await appConfigs.bootstrap(true);
 
-    await appConfig.fetch();
+    await appConfigs.fetch();
 
-    const httpPortParam = appConfig.getParam("service-http-port");
+    const httpPortParam = appConfigs.getParam("service-http-port");
     if(!httpPortParam)
         throw new Error("Missing service-http-port param");
 
@@ -77,7 +73,7 @@ async function start():Promise<void>{
     setupExpress();
     setupRoutes();
 
-    const server = app.listen(httpPort, () =>console.log(`🚀 Example server ready at: http://localhost:${httpPort}`));
+    /*const server = */app.listen(httpPort, () =>console.log(`🚀 Example server ready at: http://localhost:${httpPort}`));
 }
 
 
