@@ -29,6 +29,7 @@
     "watch": "tsc -w",
     "clean": "rm -Rf dist",
     "pretest": "yarn run build",
+    "prestart": "export PATH=\"$PROJECT_CWD/node_modules/.bin:bin:$PATH\"",
     "standard": "yarn run lint",
     "lint": "yarn run build && npx eslint ./src",
     "lint:fix": "yarn run build && npx eslint ./src --fix",
