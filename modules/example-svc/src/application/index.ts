@@ -30,39 +30,53 @@
 
 "use strict";
 
-import express from "express";
+import express, {Express} from "express";
 import {ExpressRoutes} from "./routes";
-import appConfigs from "./config";
+import {DefaultLogger} from "@mojaloop/logging-bc-client-lib";
+import {ILogger, LogLevel} from "@mojaloop/logging-bc-public-types-lib";
+import {getAppConfigurationObj} from "./config";
+import {AppConfiguration} from "@mojaloop/platform-configuration-bc-client-lib";
 
-import {ConsoleLogger, ILogger} from "@mojaloop/logging-bc-logging-client-lib";
-//import {AppConfiguration} from "@mojaloop/platform-configuration-bc-client-lib";
+// configs - constants / code dependent
+const BC_NAME = "typescript-bc-template";
+const APP_NAME = "example-svc";
+const APP_VERSION = "0.0.1";
 
-const logger: ILogger = new ConsoleLogger();
-const app = express();
+// configs - non-constants
+const ENV_NAME = process.env["ENV_NAME"] || "dev";
+const LOG_LEVEL = LogLevel.DEBUG;
 
+// get configs object
+const appConfigs: AppConfiguration = getAppConfigurationObj(ENV_NAME, BC_NAME, APP_NAME, APP_VERSION);
+
+// default logger
+const logger: ILogger = new DefaultLogger(BC_NAME, APP_NAME, APP_VERSION, LOG_LEVEL);
+
+let app:Express;
 let routes: ExpressRoutes;
 
 function setupExpress() {
-
+    app = express();
     app.use(express.json()); // for parsing application/json
     app.use(express.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
+    logger.info("Express object created and setup");
 }
 
 function setupRoutes() {
-    routes = new ExpressRoutes(logger);
+    routes = new ExpressRoutes(appConfigs, logger.createChild("expressRoutes"));
 
     app.use("/", routes.MainRouter);
 
-    app.use((req, res) => {
-        // catch all
-        res.send(404);
-    });
+    // catch all
+    app.use((req, res) => { res.send(404); });
+    logger.info("Express routes setup");
 }
 
 async function start():Promise<void>{
     await appConfigs.init();
-    await appConfigs.bootstrap(true);
-
+    // send configuration schema to the platform configuration service
+    await appConfigs.bootstrap();
+    // request current values from the platform configuration service
     await appConfigs.fetch();
 
     const httpPortParam = appConfigs.getParam("service-http-port");
@@ -73,7 +87,7 @@ async function start():Promise<void>{
     setupExpress();
     setupRoutes();
 
-    /*const server = */app.listen(httpPort, () =>console.log(`🚀 Example server ready at: http://localhost:${httpPort}`));
+    /*const server = */app.listen(httpPort, () =>logger.info(`🚀 Example server ready at: http://localhost:${httpPort}`));
 }
 
 

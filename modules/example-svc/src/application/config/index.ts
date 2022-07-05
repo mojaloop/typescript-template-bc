@@ -36,28 +36,30 @@ import {
 } from "@mojaloop/platform-configuration-bc-client-lib";
 import { ConfigParameterTypes } from "@mojaloop/platform-configuration-bc-types-lib";
 
-// configs - constants / code dependent
-const BC_NAME = "typescript-bc-template";
-const APP_NAME = "example-svc";
-const CONFIGSET_VERSION = "0.0.1";
+export function getAppConfigurationObj(envName: string, bcName: string, appName: string, appVersion:string):AppConfiguration{
+    /*
+    * DefaultConfigProvider uses the PLATFORM_CONFIG_CENTRAL_URL env var
+    * for its config if none is provided in the constructor
+    */
+    //const defaultConfigProvider: DefaultConfigProvider = new DefaultConfigProvider();
+    const defaultConfigProvider: DefaultConfigProvider = new DefaultConfigProvider("https://localhost:3000");
 
-// configs - non-constants
-const ENV_NAME = process.env["ENV_NAME"] || "dev";
-const CONFIG_SVC_BASEURL = process.env["CONFIG_SVC_BASEURL"] || "http://localhost:3100";
+    /*
+    * Set the PLATFORM_CONFIG_STANDALONE env var to something or pass a null provider to the
+    * AppConfiguration constructor to disable the provider and have the AppConfiguration
+    * instance work in standalone mode
+    */
+    const appConfig = new AppConfiguration(envName, bcName, appName, appVersion, defaultConfigProvider);
 
-const defaultConfigProvider: DefaultConfigProvider = new DefaultConfigProvider(CONFIG_SVC_BASEURL);
+    /*
+    * Add application parameters here
+    */
+    appConfig.addNewParam(
+            "service-http-port",
+            ConfigParameterTypes.INT_NUMBER,
+            3000,
+            "Http port where the webservice will listen in - v"+appVersion
+    );
 
-const appConfig = new AppConfiguration(ENV_NAME, BC_NAME, APP_NAME, CONFIGSET_VERSION, defaultConfigProvider);
-
-/*
-* Add application parameters here
-* */
-appConfig.addNewParam(
-        "service-http-port",
-        ConfigParameterTypes.INT_NUMBER,
-        3000,
-        "Http port where the webservice will listen in - v"+CONFIGSET_VERSION
-);
-
-export = appConfig;
-
+    return appConfig;
+}

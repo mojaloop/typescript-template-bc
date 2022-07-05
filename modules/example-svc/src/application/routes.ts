@@ -31,29 +31,44 @@
 "use strict";
 
 import express from "express";
-import {ILogger} from "@mojaloop/logging-bc-logging-client-lib";
+import {ILogger} from "@mojaloop/logging-bc-public-types-lib";
+import {AppConfiguration} from "@mojaloop/platform-configuration-bc-client-lib";
 
 
 export class ExpressRoutes {
     private _logger:ILogger;
+    private _appConfigs: AppConfiguration;
 
     private _mainRouter = express.Router();
 
 
-    constructor(logger:ILogger) {
+    constructor(appConfigs: AppConfiguration, logger:ILogger) {
+        this._appConfigs = appConfigs;
         this._logger = logger;
 
-        // main
+        // endpoints
         this._mainRouter.get("/", this.getExample.bind(this));
+        this._mainRouter.get("/version", this.getVersion.bind(this));
     }
 
     get MainRouter():express.Router{
         return this._mainRouter;
     }
 
-
     private async getExample(req: express.Request, res: express.Response, next: express.NextFunction){
+        this._logger.debug("Got request to example endpoint");
         return res.send({resp:"example worked"});
+    }
+
+    private async getVersion(req: express.Request, res: express.Response, next: express.NextFunction){
+        this._logger.debug("Got request to version endpoint");
+        return res.send({
+            environmentName: this._appConfigs.environmentName,
+            bcName: this._appConfigs.boundedContextName,
+            appName: this._appConfigs.applicationName,
+            appVersion: this._appConfigs.applicationVersion,
+            configsIterationNumber: this._appConfigs.iterationNumber
+        });
     }
 
 
