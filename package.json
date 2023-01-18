@@ -18,7 +18,7 @@
     "start:example-svc": "npm -w packages/example-svc run start",
     "build": "npm -ws run build",
     "watch": "npm -ws run watch",
-    "clean": "npm run clean:dist",
+    "clean": "rm -Rf dist; npm run clean:dist",
     "clean:npm": "rm -Rf node_modules; npm -ws run clean:npm",
     "clean:dist": "rm -Rf dist; npm -ws run clean",
     "lint": "npm -ws run lint",
@@ -28,7 +28,7 @@
     "posttest": "npm run coverage:merge && npm run coverage:gen-report",
     "coverage:merge": "nyc merge ./coverage/ ./coverage/coverage.json",
     "coverage:gen-report": "nyc report --reporter=lcov --temp-dir=./coverage",
-    "test:integration": "jest",
+    "test:integration": "jest --passWithNoTests --testMatch '**/test/integration/**/*.test.ts'",
     "audit:check": "npm audit",
     "audit:resolve": "npm audit fix",
     "audit:check": "npm -ws run audit:check",
@@ -53,6 +53,6 @@
     "packages/*"
   ],
   "engines": {
-    "node": ">=16.13.0"
+    "node": ">=18.13.0"
   }
 }

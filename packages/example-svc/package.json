@@ -6,7 +6,7 @@
   "homepage": "https://github.com/mojaloop/typescript-bc-template/",
   "private": true,
   "bugs": {
-    "url": "https://github.com/mojaloop/security-bc/issues#readme"
+    "url": "https://github.com/mojaloop/typescript-bc-template/issues#readme"
   },
   "contributors": [
     "Pedro Sousa Barreto <pedrosousabarreto@gmail.com>"
@@ -29,8 +29,8 @@
     "lint": "npm run build && npx eslint ./src",
     "lint:fix": "npm run build && npx eslint ./src --fix",
     "test:unit": "jest --passWithNoTests --testMatch '**/test/unit/**/*.test.ts'",
-    "dep:check": "npm exec ncu -- -e 2",
-    "dep:update": "npm exec ncu -- -u"
+    "dep:check": "ncu -e 2",
+    "dep:update": "ncu -u"
   },
   "dependencies": {
     "@mojaloop/logging-bc-client-lib": "^0.1.15",

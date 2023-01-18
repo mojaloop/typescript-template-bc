@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const { name } = require("./package.json");
 let packageName = name.replace("@mojaloop", "") || "unknown_package_name";
