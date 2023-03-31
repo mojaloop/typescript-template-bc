@@ -34,23 +34,21 @@ import express, {Express} from "express";
 import {ExpressRoutes} from "./routes";
 import {DefaultLogger} from "@mojaloop/logging-bc-client-lib";
 import {ILogger, LogLevel} from "@mojaloop/logging-bc-public-types-lib";
-import {getAppConfigurationObj} from "./config";
-import {AppConfiguration} from "@mojaloop/platform-configuration-bc-client-lib";
 
-// configs - constants / code dependent
-const BC_NAME = "typescript-bc-template";
-const APP_NAME = "example-svc";
-const APP_VERSION = "0.0.1";
+// get configClient from dedicated file
+import configClient from "./config";
 
-// configs - non-constants
-const ENV_NAME = process.env["ENV_NAME"] || "dev";
-const LOG_LEVEL = LogLevel.DEBUG;
-
-// get configs object
-const appConfigs: AppConfiguration = getAppConfigurationObj(ENV_NAME, BC_NAME, APP_NAME, APP_VERSION);
+// constants
+const PRODUCTION_MODE = process.env["PRODUCTION_MODE"] || false;
+const LOG_LEVEL: LogLevel = process.env["LOG_LEVEL"] as LogLevel || LogLevel.DEBUG;
 
 // default logger
-const logger: ILogger = new DefaultLogger(BC_NAME, APP_NAME, APP_VERSION, LOG_LEVEL);
+const logger: ILogger = new DefaultLogger(
+    configClient.boundedContextName,
+    configClient.applicationName,
+    configClient.applicationVersion,
+    LOG_LEVEL
+);
 
 let app:Express;
 let routes: ExpressRoutes;
@@ -63,7 +61,7 @@ function setupExpress() {
 }
 
 function setupRoutes() {
-    routes = new ExpressRoutes(appConfigs, logger.createChild("expressRoutes"));
+    routes = new ExpressRoutes(configClient, logger.createChild("expressRoutes"));
 
     app.use("/", routes.MainRouter);
 
@@ -73,13 +71,14 @@ function setupRoutes() {
 }
 
 async function start():Promise<void>{
-    await appConfigs.init();
+    /// start config client - this is not mockable (can use STANDALONE MODE if desired)
+    await configClient.init();
     // send configuration schema to the platform configuration service
-    await appConfigs.bootstrap();
+    await configClient.bootstrap(true);
     // request current values from the platform configuration service
-    await appConfigs.fetch();
+    await configClient.fetch();
 
-    const httpPortParam = appConfigs.getParam("service-http-port");
+    const httpPortParam = configClient.appConfigs.getParam("service-http-port");
     if(!httpPortParam)
         throw new Error("Missing service-http-port param");
 

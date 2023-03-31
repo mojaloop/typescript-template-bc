@@ -13,6 +13,10 @@
     "outDir": ".", // prevents this tsconfig from compiling any files
     "target": "ES2022",
     "module": "commonjs",
+    "types": [
+      "node",
+      "jest"
+    ],
     "lib": [
       "ES2022"
     ],

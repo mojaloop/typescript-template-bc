@@ -32,18 +32,18 @@
 
 import express from "express";
 import {ILogger} from "@mojaloop/logging-bc-public-types-lib";
-import {AppConfiguration} from "@mojaloop/platform-configuration-bc-client-lib";
+import {IConfigurationClient} from "@mojaloop/platform-configuration-bc-public-types-lib";
 
 
 export class ExpressRoutes {
     private _logger:ILogger;
-    private _appConfigs: AppConfiguration;
+    private _configClient: IConfigurationClient;
 
     private _mainRouter = express.Router();
 
 
-    constructor(appConfigs: AppConfiguration, logger:ILogger) {
-        this._appConfigs = appConfigs;
+    constructor(configClient: IConfigurationClient, logger:ILogger) {
+        this._configClient = configClient;
         this._logger = logger;
 
         // endpoints
@@ -63,11 +63,11 @@ export class ExpressRoutes {
     private async getVersion(req: express.Request, res: express.Response, next: express.NextFunction){
         this._logger.debug("Got request to version endpoint");
         return res.send({
-            environmentName: this._appConfigs.environmentName,
-            bcName: this._appConfigs.boundedContextName,
-            appName: this._appConfigs.applicationName,
-            appVersion: this._appConfigs.applicationVersion,
-            configsIterationNumber: this._appConfigs.iterationNumber
+            environmentName: this._configClient.environmentName,
+            bcName: this._configClient.boundedContextName,
+            appName: this._configClient.applicationName,
+            appVersion: this._configClient.applicationVersion,
+            configsIterationNumber: this._configClient.appConfigs.iterationNumber
         });
     }
 

@@ -4,16 +4,19 @@
 
 This repository has two main purposes
 - As a template for bounded context mono repos
-- As example code for the implementation of services which use the common corss-cutting concerns' clients (logging, auditing, platform-config, security, etc.)
+- As example code for the implementation of applications. It shows how to use common cross-cutting concerns' clients, like logging, auditing, platform-config and security.
 
-## How to use this template
+# How to use this template
 
 - Start by creating a new repository in GitHub using this template
 
 ![create repo from template](./readme-imgs/create_repo_with_template.png "Create repository using this template")
 
+- Make sure package directory names conform to the standard and end with "lib", "svc" or "tool"()
+
 Unsorted hints:
-- For modules that don't require publishing to NPM, make sure you have the `"private": true` line in package.json. By contrast, for all modules that require NPM publishing make sure it is set to false.
+- For packages that don't require publishing to NPM, make sure you have the `"private": true` line in package.json. By contrast, for all modules that require NPM publishing make sure it is set to false.
+- 
 
 ## How to add dependencies with npm packages
 
@@ -41,6 +44,8 @@ The objective is to show how to use the most important vNext platform foundation
 
 Please see the details of the example service within its [README](./modules/example-svc/README.md) file.
 
+
+
 ## Usage
 
 ### Install NVM - Node version manager
@@ -63,20 +68,34 @@ All commands below assume you're positioned at the root of the monorepo.
 npm install
 ```
 
-## Build
+### Build
 
 ```bash
 npm run build
 ```
 
-## Run
+### Run
 
 ```bash
 npm run start
 ```
 
-## Unit Tests
+### Unit Tests
 
 ```bash
 npm run test:unit
 ```
+
+### Integration Tests
+
+```bash
+npm run test:integration
+```
+
+### Execute locally the pre-commit checks - these will be executed with every commit and in the default CI/CD pipeline
+Make sure these pass before committing any code
+
+```bash
+npm run pre_commit_check
+```
+
