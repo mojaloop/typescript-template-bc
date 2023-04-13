@@ -16,19 +16,19 @@ This repository has two main purposes
 
 Unsorted hints:
 - For packages that don't require publishing to NPM, make sure you have the `"private": true` line in package.json. By contrast, for all modules that require NPM publishing make sure it is set to false.
-- 
+-
 
 ## How to add dependencies with npm packages
 
-```shell 
+```shell
 npm -w packages/package-dir-name install npm_dependency_name
 ```
 For development dependencies add the `--dev` at the end, like so:
-```shell 
+```shell
 npm -w packages/package-dir-name install npm_dependency_name --save-dev
 ```
 
-**Notes:** 
+**Notes:**
 - Replace `package-dir-name` with the correct module name, it corresponds to the directory name
 - Replace `npm_dependency_name` with the correct dependency name
 - Common devDependencies, such as linters or test frameworks, should be installed/dependend in the main `package.json` to avoid repeating them in each of the monorepo's modules
@@ -37,10 +37,20 @@ TBD finish this
 
 ## Packages
 
-### example-svc
+### Example Service - example-svc
 
 This service exemplifies how to create a bounded context service that can be deployed.
-The objective is to show how to use the most important vNext platform foundational services. 
+The objective is to show how to use the most important vNext platform foundational services.
+
+To make sure the service is docker image is build and published to DockerHub by the CI/CD pipeline, change the value of the "
+publish_to_dockerhub" to true.
+
+```json
+"private": true,
+"mojaloop": {
+  "publish_to_dockerhub": true
+},
+```
 
 Please see the details of the example service within its [README](./modules/example-svc/README.md) file.
 

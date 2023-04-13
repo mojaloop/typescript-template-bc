@@ -5,6 +5,9 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/mojaloop/typescript-bc-template/",
   "private": true,
+  "mojaloop": {
+    "publish_to_dockerhub": false
+  },
   "bugs": {
     "url": "https://github.com/mojaloop/typescript-bc-template/issues#readme"
   },
