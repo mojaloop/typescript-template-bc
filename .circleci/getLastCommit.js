@@ -1,5 +1,5 @@
 const slugPrefix = "gh/mojaloop/";
-const ciUsername = "mojaloopci";
+//const ciUsername = "mojaloopci";
 let debug = false;
 let user;// = "0d7c20153dcb2e4805b49d4a207eafed923dd53b";
 let projectslug;
@@ -115,13 +115,13 @@ async function startLoop() {
 
                 // all must be success to be considered a successful build
                 // if we are on the current build, it should have running status, so not success and get s ignored
-                if(workflow.status !== "success" || workflow.status !== "not_run"){
+                if(workflow.status !== "success" && workflow.status !== "not_run"){
                     anyFailedWorkflow = true;
                     break;
                 }
             }
 
-            if(!anyFailedWorkflow && (workflowList.length || (pipeline.state==="created" && pipeline.trigger.actor.login === ciUsername))){
+            if(!anyFailedWorkflow){
                 if (debug) {
                     console.log(`Last successful build commit sha is: ${pipeline.vcs.revision}`);
                 } else {
