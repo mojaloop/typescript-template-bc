@@ -30,6 +30,9 @@
 
 "use strict";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const packageJSON = require("../package.json");
+
 import express, {Express} from "express";
 import {ExpressRoutes} from "./routes";
 import {DefaultLogger} from "@mojaloop/logging-bc-client-lib";
@@ -39,6 +42,9 @@ import {ILogger, LogLevel} from "@mojaloop/logging-bc-public-types-lib";
 import configClient from "./config";
 
 // constants
+const BC_NAME = "example-bc";
+const APP_NAME = "example-svc";
+const APP_VERSION = packageJSON.version;
 const PRODUCTION_MODE = process.env["PRODUCTION_MODE"] || false;
 const LOG_LEVEL: LogLevel = process.env["LOG_LEVEL"] as LogLevel || LogLevel.DEBUG;
 
