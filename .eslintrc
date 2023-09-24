@@ -8,9 +8,8 @@
         "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
-        "semi": [
-            "warn"
-        ],
+        "brace-style": ["error", "1tbs"],
+        "semi": [ "warn" ],
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/naming-convention": [
             "error",
